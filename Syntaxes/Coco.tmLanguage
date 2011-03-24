@@ -6,6 +6,7 @@
 	<string>Coco Syntax: version 1</string>
 	<key>fileTypes</key>
 	<array>
+		<string>co</string>
 		<string>coco</string>
 	</array>
 	<key>foldingStartMarker</key>
