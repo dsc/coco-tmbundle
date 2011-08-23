@@ -13,10 +13,16 @@
 	<string>.*(-&gt;|=&gt;)\s*$|.*[\[{]\s*$</string>
 	<key>foldingStopMarker</key>
 	<string>^\s*$|^\s*[}\]]\s*$</string>
+	<key>keyEquivalent</key>
+	<string>^~Q</string>
 	<key>name</key>
 	<string>Coco</string>
 	<key>patterns</key>
 	<array>
+		<dict>
+			<key>include</key>
+			<string>#unquoted_word_string</string>
+		</dict>
 		<dict>
 			<key>captures</key>
 			<dict>
@@ -581,6 +587,26 @@
 							<string>constant.character.escape.coco</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>unquoted_word_string</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.string.begin.coco</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(\\)(?:[^\s\)\]\},;]|(?:\\.))+(?=[\s\)\]\},;])</string>
+					<key>name</key>
+					<string>string.word.coco</string>
 				</dict>
 			</array>
 		</dict>
