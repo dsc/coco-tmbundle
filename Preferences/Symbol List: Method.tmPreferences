@@ -4,6 +4,8 @@
 <dict>
 	<key>name</key>
 	<string>Symbol List: Method</string>
+	<key>scope</key>
+	<string>source.coco</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

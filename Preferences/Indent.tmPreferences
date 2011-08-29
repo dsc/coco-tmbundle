@@ -4,6 +4,8 @@
 <dict>
 	<key>name</key>
 	<string>Indent</string>
+	<key>scope</key>
+	<string>source.coco</string>
 	<key>settings</key>
 	<dict>
 		<key>decreaseIndentPattern</key>
