@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+
+if ! grep -Eq ':[ \t]*$' &lt;&lt;&lt; "$TM_CURRENT_WORD"; then
+    printf ': '
+fi
+printf '${1/^(.+)$/(?1:\()/}$1${1/^(.+)$/(?1:\) )/}-&gt;\n\t$0'
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>$</string>
+	<key>name</key>
+	<string>New Function</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>uuid</key>
+	<string>E78F746F-E182-458E-8E69-8DFE8AB8F7C1</string>
+</dict>
+</plist>

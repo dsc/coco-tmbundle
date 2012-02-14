@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+
+#outfile="$(dirname "$TM_FILEPATH")/$(basename -s '.co' "$TM_FILEPATH").js"
+#coco -bps &gt; "$outfile"
+#chmod 644 "$outfile"
+#common="$(path -d "$TM_FILEPATH" "$outfile")"
+#printf "Compiled \n\t%s \nto \n\t%s\n" "$(head -n1 "$common")" "$(tail -n1 "$common")" 
+
+outfile="$(sed -E 's/\.co$/.js/' &lt;&lt;&lt; "$TM_FILEPATH")"
+coco -bpc "$TM_FILEPATH" &gt; "$outfile"
+
+common="$(path -d "$TM_FILEPATH" "$outfile")"
+printf "Compiled \n\t%s \nto \n\t%s\n" "$(head -n1 &lt;&lt;&lt; "$common")" "$(tail -n1 &lt;&lt;&lt; "$common")" 
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Compile</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>uuid</key>
+	<string>25271E47-9605-4F0D-A315-35743252A452</string>
+</dict>
+</plist>

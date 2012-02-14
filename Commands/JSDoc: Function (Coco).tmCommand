@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import re, sys, textwrap
+from os import environ
+
+CONSTRUCTOR = tuple(1)
+INDENT_PAT = re.compile(r'([ \t]*)')
+INIT_PAT = re.compile(r'^[ \t]*\((.*?)\)[ \t]*\-\&gt;')
+FUNC_PAT = re.compile(r'\b([a-zA-Z$_0-9]+)[ \t]*[:=][ \t]*\((.*?)\)[ \t]*([\~\-]\&gt;)')
+
+out = ''
+
+for line in sys.stdin:
+    doc = ''
+    matched = False
+    name_tag = None
+    args = None
+    indent = INDENT_PAT.search(line).group(1)
+    
+    m = INIT_PAT.search(line)
+    if not matched and m:
+        matched = CONSTRUCTOR
+        name_tag = " * @constructor\n"
+        args = m.group(1)
+    
+    m = FUNC_PAT.search(line)
+    if not matched and m and m.group(1):
+        matched = True
+        name_tag = ""
+        #name_tag = " * @name %s\n" % m.group(1)
+        args = m.group(2)
+    
+    if matched:
+        doc += textwrap.dedent("""\
+            /**
+             * $0
+             * 
+        """)
+        if name_tag: doc += name_tag
+        
+        args = (args or '').split(',')
+        for arg in [ arg.strip() for arg in args if arg.strip() ]:
+            if '=' in arg:
+                arg, val = ( s.strip() for s in arg.split('=', 1) )
+                doc += " * @param {} [%s=%s] \n" % (arg, val)
+            else:
+                doc += " * @param {} %s \n" % arg
+        if matched is not CONSTRUCTOR:
+            doc += " * @returns {${2:Boolean}} \n */"
+        doc = '\n'.join( indent+d for d in doc.split('\n') ) +'\n'
+    
+    out += doc + line
+
+sys.stdout.write(out)
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^d</string>
+	<key>name</key>
+	<string>JSDoc: Function (Coco)</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>uuid</key>
+	<string>8A29F5F7-915A-4510-B79D-5BF174B2E3D5</string>
+</dict>
+</plist>

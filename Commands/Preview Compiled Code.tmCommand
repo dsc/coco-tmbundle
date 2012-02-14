@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+RAW="$(cat -)"
+CODE="$( echo "$RAW" | python -c 'import textwrap, sys; sys.stdout.write(textwrap.dedent(sys.stdin.read()))' )"
+
+cat &lt;( cat &lt;&lt;-MARKDOWN
+
+# Coco Preview of $(basename $TM_FILEPATH)
+
+## JavaScript
+
+\`\`\`\`javascript
+
+MARKDOWN
+) &lt;( echo "$CODE" | coco -bcs ) &lt;( cat &lt;&lt;MARKDOWN
+
+\`\`\`\`
+
+
+## Coco
+
+\`\`\`\`coco
+$CODE
+\`\`\`\`
+
+MARKDOWN
+) | $TMTOOLSPY/text/mdpreview.sh
+
+&lt;&lt;COMMENT
+
+echo "raw:"
+echo "&lt;pre&gt;"
+echo "$RAW"
+echo "&lt;/pre&gt;"
+
+echo "code:"
+echo "&lt;pre&gt;"
+echo "$CODE"
+echo "&lt;/pre&gt;"
+
+COMMENT</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>~@b</string>
+	<key>name</key>
+	<string>Display Compiled Code</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>uuid</key>
+	<string>092235B4-A047-4ECF-9F2E-2F747DBBD640</string>
+</dict>
+</plist>

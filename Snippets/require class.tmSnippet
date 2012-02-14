@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>${90:${1/.*?([^\/]+)$/\u$1/}} = require '${1:${11:store}/${12:product}}'$0</string>
+	<key>name</key>
+	<string>require class</string>
+	<key>scope</key>
+	<string>source.coco,source.coffee</string>
+	<key>tabTrigger</key>
+	<string>re</string>
+	<key>uuid</key>
+	<string>235E877E-4536-44E6-9AAD-8DF30D2C4604</string>
+</dict>
+</plist>

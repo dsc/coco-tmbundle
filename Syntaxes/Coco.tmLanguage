@@ -3,16 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>comment</key>
-	<string>Coco Syntax: version 1</string>
+	<string>Coco language syntax, by David Schoonover
+		((?&lt;!@) \bclass\b)
+	</string>
 	<key>fileTypes</key>
 	<array>
 		<string>co</string>
 		<string>coco</string>
 	</array>
 	<key>foldingStartMarker</key>
-	<string>.*(-&gt;|=&gt;)\s*$|.*[\[{]\s*$</string>
+	<string>(?x) (
+				( \{{3} (?! .*? \}{3} ) )
+			|	( "{3}  (?! .*? "{3}  ) )
+			|	( '{3} (?! .*? '{3} ) )
+			|	( \/{3} (?! .*? \/{3} ) )
+		)</string>
 	<key>foldingStopMarker</key>
-	<string>^\s*$|^\s*[}\]]\s*$</string>
+	<string>(?x) (
+				(^ ( (?!\{{3}) .)*? \}{3} )
+			|	(^ \s* ["'\/]{3} \s* $)
+		)</string>
 	<key>keyEquivalent</key>
 	<string>^~Q</string>
 	<key>name</key>
@@ -20,8 +30,281 @@
 	<key>patterns</key>
 	<array>
 		<dict>
+			<key>match</key>
+			<string>^(#!)(.*)$\n?</string>
+			<key>name</key>
+			<string>comment.line.shebang.coco</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?=/\*\*\s*$)</string>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.block.coco</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>text.html.jsdoc.coco</string>
+			<key>end</key>
+			<string>(?&lt;=\*/)</string>
+			<key>name</key>
+			<string>comment.block.asterisk.documentation.coco</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.jsdoc</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>\/\*</string>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.block.coco</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\*\/</string>
+			<key>name</key>
+			<string>comment.block.asterisk.coco</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(#)</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.coco</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>$\n?</string>
+			<key>name</key>
+			<string>comment.line.number-sign.coco</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#comment-section-marker</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
 			<key>include</key>
 			<string>#unquoted_word_string</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.language.exports.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.exports.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x) \s* \b
+				(?: (exports|module\.exports) \s* (=) \s* )+
+				([\w_\$\.]+)
+				(?= \s* ( := | (?:(?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)=|=(?!=)) ) \s* )
+			</string>
+			<key>name</key>
+			<string>meta.exports.module.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.function.coco</string>
+				</dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.language.exports.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.function.coco</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.coco</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x) \s* 
+				((?:module\.)?exports)\.([a-zA-Z_$][\w\.$_]*)
+				(?= \s* 
+					( := | (?:(?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)=|=(?!=)) ) \s* 
+					(?:	((?:\(.*?\))?) \s* ([~-]&gt;)
+					|	(function) \s* ([\w\$_]*) \s* ((?:\(.*?\))?)
+					)
+				)
+			</string>
+			<key>name</key>
+			<string>meta.exports.function.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.getter.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.function.coco</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.coco</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>TODO: use begin/end to allow highlighting of syntax crap in arguments</string>
+			<key>match</key>
+			<string>(?x)
+				\s* (@?[a-zA-Z\$_][\w\$_]*) 
+				(?= \s* 
+					(?: (\:\~) | (\:|\=) ) \s* 
+					(?:	((?:\(.*?\))?) \s* ([~-]&gt;)
+					|	(function) \s* ([\w\$_]*) \s* ((?:\(.*?\))?)
+					)
+				)
+			</string>
+			<key>name</key>
+			<string>meta.function.method.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.function.coco</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.coco</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>TODO: use begin/end to allow highlighting of syntax crap in arguments</string>
+			<key>match</key>
+			<string>(?x)
+				\s* (@?[a-zA-Z\$_][\w\$]*) 
+				(?= \s* 
+					( := | (?:(?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)=|=(?!=)) ) \s*
+					(?:	((?:\(.*?\))?) \s* ([~-]&gt;)
+					|	(function) \s* ([\w\$_]*) \s* ((?:\(.*?\))?)
+					)
+				)
+			</string>
+			<key>name</key>
+			<string>meta.function.coco</string>
 		</dict>
 		<dict>
 			<key>captures</key>
@@ -34,15 +317,87 @@
 				<key>2</key>
 				<dict>
 					<key>name</key>
+					<string>keyword.operator.function.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
 					<string>storage.type.function.coco</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.coco</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.coco</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.coco</string>
 				</dict>
 			</dict>
 			<key>comment</key>
 			<string>match stuff like: a -&gt; … </string>
 			<key>match</key>
-			<string>(\([^()]*?\))\s*([=-]&gt;)</string>
+			<string>(?x)
+				(?:	((?:\(.*?\))?) \s* ([~-]&gt;)
+					| \b (function) \s+ ([\w\$_]*) \s* ((?:\(.*?\))?) \s* (then\b)?
+				)
+			</string>
 			<key>name</key>
 			<string>meta.inline.function.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.function.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(([~-])&gt;|&lt;([~-]))</string>
+			<key>name</key>
+			<string>storage.type.function.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.class.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>variable.other.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.type.class.coco</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.inheritance.coco</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>entity.other.inherited-class.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b(class)\b\s+((?:[\w_]+\.)*)([\w\$_]+)(?:\s+(extends)\s+([\w_\$\.]+))?</string>
+			<key>name</key>
+			<string>meta.class.coco</string>
 		</dict>
 		<dict>
 			<key>captures</key>
@@ -59,9 +414,44 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(new)\s+(\w+(?:\.\w*)?)</string>
+			<string>(new)\s+([\w\$]+(?:\.[\w\$]+)*)</string>
 			<key>name</key>
 			<string>meta.class.instance.constructor</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(&lt;\[)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.coco</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.quoted.words.coco</string>
+			<key>end</key>
+			<string>(\]&gt;)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.coco</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.quoted.words.coco</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>constant.character.escape.coco</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -74,6 +464,8 @@
 					<string>punctuation.definition.string.begin.coco</string>
 				</dict>
 			</dict>
+			<key>contentName</key>
+			<string>text.html.embedded.coco</string>
 			<key>end</key>
 			<string>'''</string>
 			<key>endCaptures</key>
@@ -86,6 +478,13 @@
 			</dict>
 			<key>name</key>
 			<string>string.quoted.heredoc.coco</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -158,20 +557,8 @@
 			</array>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>###(?!#)</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.comment.coco</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>###[ \t]*\n</string>
-			<key>name</key>
-			<string>comment.block.coco</string>
+			<key>include</key>
+			<string>#regexps</string>
 		</dict>
 		<dict>
 			<key>captures</key>
@@ -179,50 +566,56 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.comment.coco</string>
+					<string>storage.type.function.coco</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(#).*$\n?</string>
-			<key>name</key>
-			<string>comment.line.coco</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>/{3}</string>
-			<key>end</key>
-			<string>/{3}[imgy]{0,4}</string>
-			<key>name</key>
-			<string>string.regexp.coco</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#interpolated_coco</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#embedded_comment</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>/(?![\s/*+{}?]).*?[^\\]/[igmy]{0,4}(?![a-zA-Z0-9])</string>
-			<key>name</key>
-			<string>string.regexp.coco</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(?&lt;!\.)(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|(?&lt;=for)\s+own)(?!\s*:)\b</string>
+			<string>(?x)
+				(?&lt;!\.)
+				\b(?:
+					return|do|let|with|
+					if|unless|then|else|
+					for|(?&lt;=for)\s+(own|ever)|by|to|from|til|
+					while|until|break|continue|
+					switch|case|fallthrough|default|
+					try|catch|finally|throw
+				)\b
+				(?!\s*[:=])
+			</string>
 			<key>name</key>
 			<string>keyword.control.coco</string>
 		</dict>
 		<dict>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.variable.assignment.exports.coco</string>
+				</dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.language.exports.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>variable.other.export.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+			</dict>
 			<key>match</key>
-			<string>and=|or=|!|%|&amp;|\^|\*|\/|\-\-|\-|\+\+|\+|~|===|==|=|!=|!==|&lt;=|&gt;=|&lt;&lt;=|&gt;&gt;=|&gt;&gt;&gt;=|&lt;&gt;|&lt;|&gt;|!|&amp;&amp;|\?|\||\|\||\:|\*=|(?&lt;!\()/=|%=|\+=|\-=|&amp;=|\^=|\b(instanceof|new|delete|typeof|and|or|is|isnt|not)\b</string>
+			<string>(?x) 
+				((?:module\.)?exports)(?:\.([a-zA-Z_$][\w\.$_]*))? \s* 
+				((?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)=|=(?!=)) \s*
+			</string>
 			<key>name</key>
-			<string>keyword.operator.coco</string>
+			<string>meta.exports.variable.coco</string>
 		</dict>
 		<dict>
 			<key>captures</key>
@@ -230,43 +623,62 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>variable.assignment.coco</string>
+					<string>variable.other.coco</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.getter.coco</string>
 				</dict>
 				<key>4</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.separator.key-value</string>
+					<string>keyword.operator.assignment.coco</string>
 				</dict>
 				<key>5</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.operator.coco</string>
+					<string>punctuation.separator.key-value</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>([a-zA-Z\$_](\w|\$|\.)*\s*(?!\::)((:)|(=))(?!(\s*\(.*\))?\s*((=|-)&gt;)))</string>
+			<string>(?x)
+				(@?[a-zA-Z$_](?:\w|\$|\.)*) \s*
+				(?!::) ( (:~) | ((?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)= | =(?!=)) | (:) ) \s*
+				(?! (?:\(.*?\))? \s* [~-]&gt; )
+			</string>
 			<key>name</key>
-			<string>variable.assignment.coco</string>
+			<string>meta.variable.assignment.coco</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(?&lt;=\s|^)([\[\{])(?=.*?[\]\}]\s+[:=])</string>
-			<key>beginCaptures</key>
+			<string>(?x) (?&lt;= \s|^)
+				([\[\{])
+				(?= .*? ([\]\}]) \s* (((?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)= | =(?!=)) | (:)) )
+			</string>
+			<key>end</key>
+			<string>(?x) [\]\}] \s* (((?:and|or|not|&amp;&amp;|\|\||!\?|\?|:)= | =(?!=)) | (:))</string>
+			<key>endCaptures</key>
 			<dict>
-				<key>0</key>
+				<key>1</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.operator.coco</string>
 				</dict>
-			</dict>
-			<key>end</key>
-			<string>([\]\}]\s*[:=])</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
+				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.operator.coco</string>
+					<string>keyword.operator.assignment.coco</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.key-value</string>
 				</dict>
 			</dict>
 			<key>name</key>
@@ -296,48 +708,63 @@
 			</array>
 		</dict>
 		<dict>
-			<key>captures</key>
-			<dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function.coco</string>
-				</dict>
-			</dict>
 			<key>match</key>
-			<string>(\s*)(?=[a-zA-Z\$_])([a-zA-Z\$_](\w|\$|:|\.)*\s*(?=[:=](\s*\(.*\))?\s*((=|-)&gt;)))</string>
+			<string>(?x)
+					\b(not|and|or)=
+				| 	\b(import(\s+all)?|typeof|instanceof|delete|new|not|and|or|is|of|in)\b
+				|(
+					([~-]&gt;|&lt;[~-]|=&gt;)|
+					::|:=|:|
+					\.\.\.|\.\.|\.@@|\.@|\.\?|\.\~|\.\+=|\.=|
+					===|!==|&lt;=|&gt;=|!=|==|&lt;\?|&gt;\?
+					&lt;&lt;&lt;&lt;|&lt;&lt;&lt;|
+					\+\+|\-\-|\*\*|&lt;\[|\]&gt;|
+					( (?&lt;!\()
+						(&amp;&amp;|\|\||!\?|\?)?
+						(/=|\*=|\+=|\-=|%=|&amp;=|\^=|&lt;&lt;=|&gt;&gt;&gt;=|&gt;&gt;=|=)
+					)|
+					!\?|&amp;&amp;|\|\||
+					\?|!|&lt;|&gt;|\^|\*|\/|\-|\+|%|&amp;|\||~
+				)
+			</string>
 			<key>name</key>
-			<string>meta.function.coco</string>
+			<string>keyword.operator.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>(=|-)&gt;</string>
-			<key>name</key>
-			<string>storage.type.function.coco</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(?&lt;!\.)(true|on|yes)(?!\s*[:=])\b</string>
+			<string>(?&lt;!\.)\b(true)(?!\s*[:=])\b</string>
 			<key>name</key>
 			<string>constant.language.boolean.true.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(?&lt;!\.)(false|off|no)(?!\s*[:=])\b</string>
+			<string>(?&lt;!\.)\b(false)(?!\s*[:=])\b</string>
 			<key>name</key>
 			<string>constant.language.boolean.false.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(?&lt;!\.)null(?!\s*[:=])\b</string>
+			<string>(?&lt;!\.)\b(null|undefined|void)(?!\s*[:=])\b</string>
 			<key>name</key>
 			<string>constant.language.null.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(?&lt;!\.)(super|this|extends)(?!\s*[:=])\b</string>
+			<string>((?&lt;!\.)\b(_|this|that|it|super|arguments|exports|module)\b)|((?&lt;=\s|\()\@\@(?!\@))</string>
 			<key>name</key>
 			<string>variable.language.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(yield|debugger)\b</string>
+			<key>name</key>
+			<string>keyword.other.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(Infinity|NaN)\b</string>
+			<key>name</key>
+			<string>constant.language.number.js.coco</string>
 		</dict>
 		<dict>
 			<key>captures</key>
@@ -345,40 +772,100 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>storage.type.class.coco</string>
+					<string>entity.name.type.builtin.js.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x) (?&lt;!\.) \b(
+					Object|Array|Function|String|Number|Boolean|Date|RegExp|
+					Iterator|Proxy|
+					ArrayBuffer|(Float(32|64)|(Ui|I)nt(8|16|32)|Uint8Clamped)Array
+				)\b</string>
+			<key>name</key>
+			<string>support.class.js.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.type.exception.js.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b((Eval|Internal|Range|Reference|Syntax|Type|URI)?Error|StopIteration)\b</string>
+			<key>name</key>
+			<string>support.type.exception.js.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(JSON)\b</string>
+			<key>name</key>
+			<string>support.variable.js.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b((un)?eval|(de|en)codeURI(Component)?|is(NaN|Finite)|parse(Int|Float))\b</string>
+			<key>name</key>
+			<string>support.function.builtin.js.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?x) (?&lt;=\.) \b(
+					__proto__ | prototype | constructor | calle[er]
+				)\b</string>
+			<key>name</key>
+			<string>variable.language.instance.coco</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?x) (?&lt;=\.) \b(length)\b</string>
+			<key>name</key>
+			<string>support.variable.instance.js.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.variable.math.js.coco</string>
 				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.type.class.coco</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>entity.other.inherited-class.coco</string>
-				</dict>
-				<key>4</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.inheritance.coco</string>
+					<string>support.function.math.js.coco</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(class\b)\s+([a-zA-Z\$_]\w+)?(\s+(extends)\s+[a-zA-Z\$_]\w*)?</string>
+			<string>(?x) \b(Math) \. (
+					(a?(sin|cos|tan))|atan2|
+					random|
+					min|max|floor|ceil|
+					abs|round|pow|sqrt|exp|log
+				)\b</string>
 			<key>name</key>
-			<string>meta.class.coco</string>
+			<string>support.function.math.js.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(debugger|\\)\b</string>
+			<string>(?x) (?&lt;=\.) \b(
+					call | apply |
+					to(Locale)?String | toSource | valueOf | (un)?watch |
+					create | keys | isArray | parse | stringify | toJSON |
+					__( noSuchMethod | (define|lookup)[GS]etter )__ |
+					definePropert(y|ies) | getOwnProperty(Names|Descriptor) | (get|is)PrototypeOf |
+					hasOwnProperty | propertyIsEnumerable | seal | freeze | preventExtensions | is(Sealed|Frozen|Extensible) |
+					slice | indexOf | lastIndexOf |
+					push | pop | (un)?shift | concat | splice | join | sort | reverse |
+					reduce | map forEach | filter | reduceRight | some | every |
+					test | exec | match | replace | split |
+					fromCharCode | sub(str|string) | char(Code)?At | to(Locale)?(Upper|Lower)Case | trim(Left|Right)? |
+					(set|get)(UTC)?(Date|Day|Hours|Milliseconds|Minutes|Month||Seconds|Time|(Full)?Year) | getTimezoneOffset
+				)\b</string>
 			<key>name</key>
-			<string>keyword.other.coco</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(Infinity|NaN|undefined)\b</string>
-			<key>name</key>
-			<string>constant.language.coco</string>
+			<string>support.function.method.js.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
@@ -388,33 +875,61 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>,[ |\t]*</string>
+			<string>,[ \t]*</string>
 			<key>name</key>
-			<string>meta.delimiter.object.comma.coco</string>
+			<string>punctuation.delimiter.object.comma.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
 			<string>\.</string>
 			<key>name</key>
-			<string>meta.delimiter.method.period.coco</string>
+			<string>punctuation.definition.property.period.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
 			<string>\{|\}</string>
 			<key>name</key>
-			<string>meta.brace.curly.coco</string>
+			<string>punctuation.section.brace.curly.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
 			<string>\(|\)</string>
 			<key>name</key>
-			<string>meta.brace.round.coco</string>
+			<string>punctuation.section.brace.round.coco</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\[|\]\s*</string>
+			<string>(\[|\])\s*</string>
 			<key>name</key>
-			<string>meta.brace.square.coco</string>
+			<string>punctuation.section.brace.square.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.enum.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b([A-Z]|[A-Z_][A-Z_$]+)\b</string>
+			<key>name</key>
+			<string>meta.name.enum.coco</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.type.class.coco</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b(_*[A-Z][a-zA-Z0-9_$]*)\b</string>
+			<key>name</key>
+			<string>meta.name.class.coco</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -432,9 +947,46 @@
 			<key>include</key>
 			<string>#numeric</string>
 		</dict>
+		<dict>
+			<key>include</key>
+			<string>source.js.node</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>source.js.console</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>source.js.browser</string>
+		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>comment-section-marker</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.section-marker.begin</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.section-marker.source.additions</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.section-marker.begin</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(\* \* \*)\s+(.+?)\s+(\1)</string>
+			<key>name</key>
+			<string>meta.comment.section-marker.source.additions</string>
+		</dict>
 		<key>double_quoted_string</key>
 		<dict>
 			<key>patterns</key>
@@ -515,8 +1067,51 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.embedded.coco</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.interpolated.coco</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.readwrite.instance.coco</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?&lt;![^\\]\\)(\#)((@[a-zA-Z\$_][\w\$]*))(?=[^\w\$]|$)</string>
+					<key>name</key>
+					<string>source.coco.embedded.source</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.embedded.coco</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.interpolated.coco</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?&lt;![^\\]\\)(\#)([a-zA-Z\$_][\w\$]*)(?=[^\w\$]|$)</string>
+					<key>name</key>
+					<string>source.coco.embedded.source</string>
+				</dict>
+				<dict>
 					<key>begin</key>
-					<string>\#\{</string>
+					<string>(?&lt;![^\\]\\)\#\{</string>
 					<key>captures</key>
 					<dict>
 						<key>0</key>
@@ -526,7 +1121,7 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>\}</string>
+					<string>(?&lt;![^\\]\\)\}</string>
 					<key>name</key>
 					<string>source.coco.embedded.source</string>
 					<key>patterns</key>
@@ -545,9 +1140,91 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;!\$)\b((0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?(e[+\-]?[0-9]+)?))\b</string>
+					<string>(?&lt;!\$)\b(([0-9]+r[0-9_]+)|((16r|0[xX])[0-9a-fA-F_]+)|([0-9]+(\.[0-9_]+)?(e[+\-]?[0-9_]+)?)[_a-zA-Z]*)\b</string>
 					<key>name</key>
 					<string>constant.numeric.coco</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regexps</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.regexp.begin.coco</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.operator.regexp.flag.coco</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.regexp.end.coco</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?x) (//) (?![*+{}?]) .*? (\# (?: [a-zA-Z\$_]\w* | \{ @? [a-zA-Z\$_]\w*(?:\.\w+)* \} ) )? (?&lt;!\\) (//\?)</string>
+					<key>name</key>
+					<string>string.regexp.heredoc.no-interpolation.oneline.coco</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?x) (//) (?![*+{}?]) (?= ([^\n]*? [^\\] (//) [imgy]{0,4}) )</string>
+					<key>end</key>
+					<string>(?x) (?&lt;!\\) (//) [imgy]{0,4}</string>
+					<key>name</key>
+					<string>string.regexp.heredoc.oneline.coco</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#interpolated_coco</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#embedded_comment</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?x) (//) (?! [*+{}?] [^\n]*? [^\\] //)</string>
+					<key>end</key>
+					<string>(?&lt;!\\)(//\?)</string>
+					<key>name</key>
+					<string>string.regexp.heredoc.no-interpolation.coco</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?x) (//) (?![*+{}?])</string>
+					<key>end</key>
+					<string>(?x) (?&lt;!\\) (//[imgy]{0,4})</string>
+					<key>name</key>
+					<string>string.regexp.heredoc.coco</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#interpolated_coco</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#embedded_comment</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?x) (/) (?![/*+{}?]) .*? (?&lt;![^\\]\\) (/[igmy]{0,4}) (?![a-zA-Z0-9])</string>
+					<key>name</key>
+					<string>string.regexp.coco</string>
 				</dict>
 			</array>
 		</dict>
@@ -590,6 +1267,24 @@
 				</dict>
 			</array>
 		</dict>
+		<key>strings</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#unquoted_word_string</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#double_quoted_string</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#single_quoted_string</string>
+				</dict>
+			</array>
+		</dict>
 		<key>unquoted_word_string</key>
 		<dict>
 			<key>patterns</key>
@@ -620,11 +1315,16 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>variable.assignment.coco</string>
+							<string>variable.language.exports.coco</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>variable.coco</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>([a-zA-Z\$_]\w*(\.\w+)*)</string>
+					<string>(?:((?:module\.)?exports)\.)?([a-zA-Z\$_]\w*(\.\w+)*)</string>
 					<key>name</key>
 					<string>variable.assignment.coco</string>
 				</dict>

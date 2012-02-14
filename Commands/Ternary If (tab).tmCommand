@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+other="v2"
+[ "$TM_LINE_AFTER" ] &amp;&amp; other=""
+printf "if \${1:${TM_SELECTED_TEXT:-not v?}} then \${2:v1} else\${3/^(.+)\$/(?1: )/}\${3:$other}"</string>
+	<key>fallbackInput</key>
+	<string>none</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Ternary If (tab)</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coffee, source.coco</string>
+	<key>tabTrigger</key>
+	<string>if</string>
+	<key>uuid</key>
+	<string>22775942-0E39-475F-A8A7-1433F9EC4F13</string>
+</dict>
+</plist>

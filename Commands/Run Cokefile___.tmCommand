@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+res="$(CocoaDialog standard-inputbox \
+    --title "Run Cokefile" \
+    --informative-text "Enter task(s) to run..." \
+    --text "tasks" 
+)"
+[ $(head -n1 &lt;&lt;&lt; "$res") = "2" ] &amp;&amp; exit_discard
+tasks=$(tail -n1 &lt;&lt;&lt; "$res")
+
+cat &lt;&lt;HTML
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;coke $tasks&lt;/title&gt;
+    &lt;style&gt;body { font-family:Geogrotesque; } h1 { font-weight:normal; } pre, code { font-family:Menlo; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;&lt;code&gt;coke $tasks&lt;/code&gt;&lt;/h1&gt;
+&lt;hr&gt;
+&lt;pre&gt;
+HTML
+
+eval coke $tasks
+
+cat &lt;&lt;HTML
+&lt;/pre&gt;
+&lt;/html&gt;
+HTML
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Run Cokefile...</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.coco.coke</string>
+	<key>uuid</key>
+	<string>F6E51D31-88DB-493A-9733-6D0244EC7FCC</string>
+</dict>
+</plist>

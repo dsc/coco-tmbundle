@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+CODE=$(coco -bcs)
+
+if head -n1 &lt;&lt;&lt; "$CODE" | grep -Eq '^var '; then
+	CODE=$(tail -n +2 &lt;&lt;&lt; "$CODE")
+fi
+
+# without quotes, bash will join the lines with IFS (" ")
+echo -n $CODE | pbcopy
+
+echo "// Copied!"
+echo -n $CODE
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Copy Compiled Code (one line, no var)</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>uuid</key>
+	<string>8AECC0DD-737C-40F8-925E-08CA8827773F</string>
+</dict>
+</plist>

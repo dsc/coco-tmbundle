@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>Cokefile</string>
+	</array>
+	<key>foldingStartMarker</key>
+	<string>^\s*(task)\b</string>
+	<key>name</key>
+	<string>Coco Cokefile</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>\b(Coco)\b</string>
+			<key>name</key>
+			<string>support.class.coco.coke</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?x) ^ \s* (task) \s+ (?: (\\(\w+)) | ((['"])(\w+)\5) )\s</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.task.coco.coke</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>string.word.name.coco.coke</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.section.task.coco.coke</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>string.quoted.name.coco.coke</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.section.task.coco.coke</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>^$</string>
+			<key>name</key>
+			<string>meta.task.coco.coke</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?x) \b(
+					invoke|option|
+					spawn|exec|sh|run|
+					print|say|read|slurp|write|spit|dir|
+					dirname|basename|extname|resolve|relative|normalize|joinPath|exists|
+					glob|commondir|sourceFiles|expand|is(Directory|File)(Sync)?|mkdirp(Sync|Async)?|
+					minify|cssmin|inspect
+				)\b</string>
+			<key>name</key>
+			<string>support.function.coco.coke</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?x) \b(
+					Tasks|Aliases|Flags|Options|coco|
+					_|underscore|colors|eyes|inspector|Table|Seq
+				)\b</string>
+			<key>name</key>
+			<string>support.variable.coco.coke</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>source.coco</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.coco.coke</string>
+	<key>uuid</key>
+	<string>1774686F-8A92-4530-9656-CDC5304791EB</string>
+</dict>
+</plist>

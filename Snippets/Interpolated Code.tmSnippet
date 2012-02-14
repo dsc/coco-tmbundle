@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>#${TM_SELECTED_TEXT/^(.+)$/(?1:{)/}${1:$TM_SELECTED_TEXT}${TM_SELECTED_TEXT/^(.+)$/(?1:})/}</string>
+	<key>keyEquivalent</key>
+	<string>#</string>
+	<key>name</key>
+	<string>Interpolated Code</string>
+	<key>scope</key>
+	<string>(string.quoted.double.coco|string.quoted.double.heredoc.coco|string.quoted.heredoc) - string source, source.yaml string</string>
+	<key>uuid</key>
+	<string>E104245B-487A-4E3A-9DDD-76E1D2F71A1D</string>
+</dict>
+</plist>

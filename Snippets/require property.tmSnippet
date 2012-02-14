@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>${3:$1}${1/^(.+)$/(?1: = )/}{${2:exec, spawn}} = require '${1:child_process}'$0</string>
+	<key>name</key>
+	<string>require property</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>rec</string>
+	<key>uuid</key>
+	<string>DADAAFB5-9243-415D-BBD7-45B8A959FA5B</string>
+</dict>
+</plist>

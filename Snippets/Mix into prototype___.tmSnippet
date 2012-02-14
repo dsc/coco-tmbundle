@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>${2:Child}:: import ${1:Mixin}::$0</string>
+	<key>name</key>
+	<string>Mix into prototype...</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>mixin</string>
+	<key>uuid</key>
+	<string>34E6DC6A-B8EE-485E-AD65-4377B027F739</string>
+</dict>
+</plist>

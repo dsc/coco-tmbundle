@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+TXT=$(sed -E 's/^[[:space:]]*([^[:space:]]+).*/\1/')
+FILE=$(basename "$TM_FILENAME" | sed -E 's/(.+)\..+/\1/')
+CLS_NAME="${TXT:-${FILE:-Dinosaur}}"
+CLS_NAME="$(python -c "print '$CLS_NAME'.capitalize()")"
+
+cat &lt;&lt;SNIPPET
+\${8:\${3/^(.+)$/(?1:\$1 = require '\\L\$1')/}}
+
+
+class \${1:$CLS_NAME}\${2: extends \${3:Base}}
+	
+	\${5/^(.+)$/(?1:\()/}\${5:...args}\${5/^(.+)$/(?1:\) )/}-&gt;
+		\${7:super ...
+		}\$0
+	
+
+
+module.exports = \$1
+SNIPPET
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Class</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>class</string>
+	<key>uuid</key>
+	<string>F52A311E-CB07-4C9A-8BF1-3ACFC6D616F0</string>
+</dict>
+</plist>

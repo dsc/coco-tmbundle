@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>printf "typeof \${3:%s} is '\${2:s}\${2/(?:^(?:(s)|(f)|(n)|(u)|(b)|(o))$)|.*/(?1:tring)(?2:unction)(?3:umber)(?4:ndefined)(?5:oolean)(?6:bject)/}'\$0" "$(cat -)"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@I</string>
+	<key>name</key>
+	<string>typeof ...</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco,source.coffee</string>
+	<key>uuid</key>
+	<string>7E912163-B36C-4E26-9475-81FAE5A90C42</string>
+</dict>
+</plist>

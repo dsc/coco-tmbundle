@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Symbol List: Hide</string>
+	<key>scope</key>
+	<string>source.coco support.class entity.name.type, meta.name.class entity.name.type.class.coco, storage.type.class entity.name.type.class.coco, meta.class.instance.constructor entity.name.type.instance.coco</string>
+	<key>settings</key>
+	<dict>
+		<key>showInSymbolList</key>
+		<integer>0</integer>
+	</dict>
+	<key>uuid</key>
+	<string>F49AF41F-DED6-4064-8457-1F35FB4FA5F5</string>
+</dict>
+</plist>

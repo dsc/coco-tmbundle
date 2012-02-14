@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>task \\${1:build} '${2:build coco sources}' -&gt;
+${0:    coco &lt;[ -bjc package.co ]&gt;
+    coco &lt;[ -bc compiler.co ]&gt;
+}</string>
+	<key>name</key>
+	<string>Coke: task</string>
+	<key>scope</key>
+	<string>source.coco.coke</string>
+	<key>tabTrigger</key>
+	<string>task</string>
+	<key>uuid</key>
+	<string>47B8AA3E-BBFB-492C-B203-E8E76DF474B0</string>
+</dict>
+</plist>

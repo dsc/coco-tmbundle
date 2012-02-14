@@ -5,11 +5,15 @@
 	<key>name</key>
 	<string>Symbol List: Method Instance</string>
 	<key>scope</key>
-	<string>source.coco</string>
+	<string>source.coco meta.function.method entity.name.function</string>
 	<key>settings</key>
 	<dict>
+		<key>comment</key>
+		<string>symbolTransformation = 's/^(\s+)([a-zA-Z\$_][\w\$_]*)\s*:/$1$2/';</string>
 		<key>showInSymbolList</key>
-		<integer>0</integer>
+		<integer>1</integer>
+		<key>symbolTransformation</key>
+		<string>s/^[^\w\$_]*([\w\$_]+).*$/    $1/</string>
 	</dict>
 	<key>uuid</key>
 	<string>7A2089DD-6A1D-4729-8EBD-4846059642A2</string>

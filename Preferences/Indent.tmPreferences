@@ -9,16 +9,53 @@
 	<key>settings</key>
 	<dict>
 		<key>decreaseIndentPattern</key>
-		<string>^\s*(\}|\]|else|catch|finally)$</string>
+		<string>(?x)
+		^ \s* (
+				( $ | \} | \] )
+			|	(else|case|let|with)\b
+			|	( (?!\/\*) .)* \*\/
+		)
+	</string>
 		<key>increaseIndentPattern</key>
 		<string>(?x)
-		^\s*
-		(.*class
-		|[a-zA-Z\$_](\w|\$|:|\.)*\s*(?=\:(\s*\(.*\))?\s*((=|-)&gt;\s*$)) # function that is not one line
-		|[a-zA-Z\$_](\w|\$|\.)*\s*(?=(?!\::)\:(?!(\s*\(.*\))?\s*((=|-)&gt;))):\s*((if|while)(?!.*?then)|for|$) # assignment using multiline if/while/for
-		|(if|while)(?!.*?then)|for
-		|.*\{$
-		|.*\[$)</string>
+		( # anywhere
+			\b(class)\b
+		
+		) | (( # ends a line...
+			
+			# trailing kv assignment (but not ::)
+				(?&lt;! :) :
+			
+			# literals
+			|	( \{ | \[ )
+			
+			# special blocks
+			| \b(do|new|try|finally)
+			
+			# heredocs, here-regex, multiline comment
+			| ("{3}  (?! .*? "{3}))
+			| ('{3} (?! .*? '{3}))
+			| (\/{3} (?! .*? \/{3}))
+			| (\/\*  (?! .*? \*\/))
+			
+			# multiline functions
+			| ( \(.*?\) )? \s* [~-]&gt;
+			| \b function \s+ (\w*) \s* ( \( .*? \) )? \s* (?! then\b)
+			
+			# assign a block
+			|	(?&lt;! :) (:=?|=) \s* (
+						(try|finally)\b
+					|	(if|unless|while|until|case|let|with) (?! .*? then\b)
+				)
+			
+		) \s* $ )
+		| (^ \s* ( # begins a line...
+			
+			(if|else|unless|while|until|case|let|with)\b(?! .*? then\b)
+			|	(switch|for|do|try|catch|finally)\b
+			
+		))
+	</string>
 	</dict>
 	<key>uuid</key>
 	<string>89E616B7-41B4-421C-B737-AB1E372C761D</string>

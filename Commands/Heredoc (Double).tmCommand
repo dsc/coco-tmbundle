@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>FIRST_TICK='"'
+LAST_TICK='"'
+if [ "$TM_SELECTED_TEXT" ]; then
+	TXT="$TM_SELECTED_TEXT"
+else
+	TXT="$(cat - | sed -E -e 's/^[\t ]*//' -e 's/^["]+$//')"
+	if grep -Pq '^[\t ]*""' &lt;&lt;&lt; "$TM_CURRENT_WORD"; then
+		FIRST_TICK=""
+		LAST_TICK=""
+	elif grep -Pq '"[\t ]*$' &lt;&lt;&lt; "$TM_CURRENT_WORD"; then
+		LAST_TICK=""
+	elif grep -Pq '^[\t ]*"' &lt;&lt;&lt; "$TM_CURRENT_WORD"; then
+		FIRST_TICK=""
+	fi
+fi
+#echo "SEL:  »${TM_SELECTED_TEXT}«"
+#echo "WORD: »${TM_CURRENT_WORD}«"
+#echo "TXT:  »${TXT}«"
+
+printf '%s""\n' "${FIRST_TICK}"
+printf '\t${1:%s}\n' "$(echo "$TXT" | escape_snippet)"
+printf '""%s' "${LAST_TICK}"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@"</string>
+	<key>name</key>
+	<string>Heredoc (Triple-Double)</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco,source.coffee,source.python</string>
+	<key>uuid</key>
+	<string>1A4CF1D0-B9CB-41C4-9AC2-11E722DA55E3</string>
+</dict>
+</plist>

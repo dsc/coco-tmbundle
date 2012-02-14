@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>task \\bundle 'Build and minify JS &amp; CSS bundles for production' -&gt;
+	invoke \\bundle_js
+	invoke \\bundle_css
+
+task \\bundle_js 'Build and minify JS' -&gt;
+	outpath = "${1:${2:var/lib}/${3:lib-bundle}.js}"
+	outmin = outpath.replace '.js', '.min.js'
+	
+	bundle_js do
+		outpath
+		&lt;[	${4:es5-shim modernizr require json2
+			jquery jquery.history.min
+			underscore.mod underscore.string.mod
+			backbone.mod}
+		]&gt;
+		paths : "${5:static/lib var/lib}", minify:false
+	
+	say 'Compressing', outpath.white.bold, 'to', outmin.magenta.bold,  '...'
+	write outmin, minify(read outpath), 'utf8'
+
+task \\bundle_css 'Build and minify CSS' -&gt;
+	bundle_css do
+		"var/css/site-bundle.css"
+		"reset ${TM_PROJECT_NAME:`basename ${TM_PROJECT_DIRECTORY:-lol}`} tipsy"
+		paths: "static/css var/css"
+
+</string>
+	<key>name</key>
+	<string>Coke: bundle tasks</string>
+	<key>scope</key>
+	<string>source.coco.coke</string>
+	<key>tabTrigger</key>
+	<string>bundle</string>
+	<key>uuid</key>
+	<string>AF461603-2F69-4A79-AFD2-544C448B879C</string>
+</dict>
+</plist>

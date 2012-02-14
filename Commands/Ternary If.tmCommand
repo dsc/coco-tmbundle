@@ -6,21 +6,27 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/bin/bash
-
-echo "&lt;pre style='font-family: Consolas; font-size: 15px; line-height: 22px;'&gt;"
-coco -s
-echo "&lt;/pre&gt;"</string>
+if [ -z "$TM_SELECTED_TEXT" ] || grep -Eq '^?$' &lt;&lt;&lt; "$TM_SELECTED_TEXT"; then
+	printf ':'
+else
+	other="v2"
+	[ "$TM_LINE_AFTER" ] &amp;&amp; other=""
+	printf "if \${1:${TM_SELECTED_TEXT:-not v?}} then \${2:v} else\${3/^(.+)\$/(?1: )/}\${3:$other}"
+fi
+</string>
+	<key>fallbackInput</key>
+	<string>none</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>@r</string>
+	<string>:</string>
 	<key>name</key>
-	<string>Run</string>
+	<string>Ternary If</string>
 	<key>output</key>
-	<string>showAsHTML</string>
+	<string>insertAsSnippet</string>
 	<key>scope</key>
 	<string>source.coco</string>
 	<key>uuid</key>
-	<string>D3B17463-8B0C-441E-9A54-D47040213E17</string>
+	<string>5434E8FC-70E7-46F2-B672-B3976DC3DCFB</string>
 </dict>
 </plist>

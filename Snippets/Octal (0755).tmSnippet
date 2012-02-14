@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>8r${1:0755}$0</string>
+	<key>name</key>
+	<string>Octal (0755)</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>0o</string>
+	<key>uuid</key>
+	<string>86329B1F-90BD-4938-958D-00AA2EF06EB8</string>
+</dict>
+</plist>

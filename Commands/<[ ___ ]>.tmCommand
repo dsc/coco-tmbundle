@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+
+txt="$(cat -)"
+Q='["'"']"
+
+if echo "$txt" | grep -Pq "(?x)^ \s* \[ \s* (?:\s* ($Q).+?\1 \s* ,)* ($Q).+?\2 \s* \] \s*\$"; then
+	txt="$(printf '%s' "$txt" | ssed -R -e "s/^\s*\[\s*$Q//" -e "s/$Q(\s*,?)\s*\]\s*\$//" -e "s/$Q\s*,\s*$Q/ /g")"
+fi
+
+printf '&lt;[ %s ]&gt;$0' "${txt:-\$1}"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>~,</string>
+	<key>name</key>
+	<string>&lt;[ ... ]&gt;</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>&lt;</string>
+	<key>uuid</key>
+	<string>34CE005B-2BDD-4281-8CFA-672F170084E7</string>
+</dict>
+</plist>

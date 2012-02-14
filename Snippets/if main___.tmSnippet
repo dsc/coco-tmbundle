@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>if require.main is module
+	$0</string>
+	<key>name</key>
+	<string>if main...</string>
+	<key>scope</key>
+	<string>source.coco</string>
+	<key>tabTrigger</key>
+	<string>ifmain</string>
+	<key>uuid</key>
+	<string>C6860876-5DF6-4E9D-AE8A-762056DF1C03</string>
+</dict>
+</plist>
