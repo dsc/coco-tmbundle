@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>${90:${1/.*?([^\/]+)$/\u$1/}} = require '${1:${11:store}/${12:product}}'$0</string>
+	<string>${90:${1/.*?([^\/]+)$/\u$1/}} = require '${1:${11:${TM_PROJECT_NAME:`basename "${TM_PROJECT_DIRECTORY:-lol}"`}}/${12:`basename -s .co "$TM_FILENAME"`}}'$0</string>
 	<key>name</key>
 	<string>require class</string>
 	<key>scope</key>

@@ -6,24 +6,22 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/bin/bash
+cat - | coco -bpes
 
-outfile="$(sed -E 's/\.co$/.js/' &lt;&lt;&lt; "$TM_FILEPATH")"
-coco -bpc "$TM_FILEPATH" &gt; "$outfile"
-
-common="$(path -d "$TM_FILEPATH" "$outfile")"
-printf "Compiled \n\t%s \nto \n\t%s\n" "$(head -n1 &lt;&lt;&lt; "$common")" "$(tail -n1 &lt;&lt;&lt; "$common")" 
 </string>
+	<key>fallbackInput</key>
+	<string>line</string>
 	<key>input</key>
-	<string>document</string>
+	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>@r</string>
+	<string>@R</string>
 	<key>name</key>
-	<string>Compile</string>
+	<string>Run Code</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>openAsNewDocument</string>
 	<key>scope</key>
 	<string>source.coco</string>
 	<key>uuid</key>
-	<string>25271E47-9605-4F0D-A315-35743252A452</string>
+	<string>B468C5F1-9960-4621-B0D8-F7DF00DDB619</string>
 </dict>
 </plist>
